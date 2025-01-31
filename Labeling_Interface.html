@@ -166,6 +166,182 @@
             <!-- Navbar -->
             <div class="navbar">
                 <button onclick="triggerFileUpload()">Add Picture</button>
+                <title>Create Label Popup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Dark Overlay Background */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+        }
+
+        /* Popup Window */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #222;
+            padding: 20px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            z-index: 1000;
+            color: white;
+        }
+
+        .popup h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Label Name Input */
+        .popup input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background: #444;
+            color: white;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+
+        /* Shape Selection */
+        .shape-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .shape-buttons button {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+        }
+
+        .shape-buttons button:hover {
+            background: #666;
+        }
+
+        /* Color Picker */
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .color-picker input {
+            width: 30px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .color-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        /* Preview Box */
+        .preview-box {
+            width: 100%;
+            height: 150px;
+            background: #ccc;
+            margin-bottom: 10px;
+        }
+
+        /* Create Label Button */
+        .popup .create-btn {
+            width: 100%;
+            padding: 10px;
+            background: white;
+            color: black;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .popup .create-btn:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+    <!-- Popup -->
+    <div class="popup" id="popup">
+        <h3>Name The Label</h3>
+        <input type="text" placeholder="Enter label name">
+
+        <h3>Choose the shape for Label</h3>
+        <div class="shape-buttons">
+            <button>Circle</button>
+            <button>Rectangle</button>
+            <button>Polygon</button>
+        </div>
+
+        <h3>Choose color for Label</h3>
+        <div class="color-picker">
+            <input type="color" id="colorInput" onchange="updateColor()">
+            <div class="color-preview" id="colorPreview"></div>
+        </div>
+
+        <!-- Preview Box -->
+        <div class="preview-box"></div>
+
+        <!-- Create Label Button -->
+        <button class="create-btn" onclick="closePopup()">Create Label</button>
+    </div>
+
+    <script>
+        // Show popup
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        // Close popup
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        // Update color preview
+        function updateColor() {
+            let color = document.getElementById('colorInput').value;
+            document.getElementById('colorPreview').style.backgroundColor = color;
+        }
+    </script>
+
+    <!-- Button to Open Popup -->
                 <button onclick="showPopup()">Create Label</button>
                 <button>Export</button>
             </div>
@@ -186,13 +362,7 @@
         </div>
     </div>
 
-    <!-- Popup Window -->
-    <div class="overlay" id="overlay" onclick="closePopup()"></div>
-    <div class="popup" id="popup">
-        <h3>Create Label</h3>
-        <input type="text" placeholder="Enter label name">
-        <button onclick="closePopup()">Save</button>
-    </div>
+    
 
     <script>
         // Function to trigger file upload
